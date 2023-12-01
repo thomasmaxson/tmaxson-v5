@@ -1,0 +1,373 @@
+//
+// Media Query, Breakpoints
+// --------------------------------------------------
+
+@use 'variables' as var;
+
+
+// 
+// Get breakpoint value
+// ----------------------------------------
+
+@function get-media-query-value( $name: xs, $breakpoints ) { 
+	$value: #{$name};
+
+	@if map-has-key( $breakpoints, #{$name} ) { 
+		$value: map-get( $breakpoints, #{$name} );
+	}
+
+	@return $value;
+}
+
+
+// 
+// Get first breakpoint
+// ----------------------------------------
+
+@function media-query-min( $breakpoints : var.$breakpoints-width ) { 
+	@return nth( map-values( $breakpoints ), 1 );
+}
+
+
+// 
+// Get min breakpoint
+// ----------------------------------------
+
+// @function media-query-min( $breakpoints : var.$breakpoints-width ) { 
+// 	$min: map-get( $breakpoints, $name );
+
+// 	@return if( $min != 0, $min, null );
+// }
+
+
+// 
+// Get last breakpoint
+// ----------------------------------------
+
+@function media-query-max( $breakpoints : var.$breakpoints-width ) { 
+	@return nth( map-values( $breakpoints ), length( $breakpoints ) );
+}
+
+
+// 
+// Get max breakpoint
+// ----------------------------------------
+
+// @function media-query-max( $breakpoints : var.$breakpoints-width ) { 
+// 	$max: media-query-next( $name, $breakpoints );
+
+// 	@return if( $max, media-query-min( $max, $breakpoints ) - .02, null );
+// }
+
+
+// 
+// Get previous breakpoint in list
+// ----------------------------------------
+
+@function media-query-previous( $name: xs, $breakpoints : var.$breakpoints-width ) { 
+	$keys: map-keys( $breakpoints );
+	$n: index( $keys, $name );
+
+	@return if( $n > 1, nth( $keys, $n - 1 ), null );
+}
+
+
+// 
+// Get next breakpoint in list
+// ----------------------------------------
+
+@function media-query-next( $name: xs, $breakpoints : var.$breakpoints-width ) { 
+	$keys: map-keys( $breakpoints );
+	$n: index( $keys, $name );
+
+	@return if( null != $n and $n < length( $keys ), nth( $keys, $n + 1 ), null );
+}
+
+
+// 
+// Process media query output
+// https://github.com/rafalbromirski/sass-mediaqueries/blob/master/_media-queries.scss
+// ----------------------------------------
+
+@mixin _breakpoint( $args... ) { 
+	$media-type: 'all';
+	$media-type-key: 'media-type';
+	$args: keywords( $args );
+	$expr: '';
+
+	// Remove Media Type Key form args
+	@if map-has-key( $args, $media-type-key ) { 
+		$media-type: map-get( $args, $media-type-key );
+		$args: map-remove( $args, $media-type-key );
+	}
+
+	@each $key, $value in $args { 
+		@if $value {
+			$expr: "#{$expr} and (#{$key}: #{$value})";
+		}
+	}
+
+	$output: #{$media-type} #{$expr};
+
+	@media #{$output} {
+		@content;
+	}
+}
+
+
+// 
+// Media query, screen size and up
+// ----------------------------------------
+
+@mixin up( $size: xs, $breakpoints : var.$breakpoints-width ) { 
+	$value : get-media-query-value( $size, $breakpoints );
+
+	@include _breakpoint( $min-width : $value ) { 
+		@content;
+	}
+}
+
+
+// 
+// Media query, screen size and down
+// ----------------------------------------
+
+@mixin down( $size: lg, $breakpoints : var.$breakpoints-width ) { 
+	$value : get-media-query-value( $size, $breakpoints );
+
+	@include _breakpoint( $max-width : $value ) { 
+		@content;
+	}
+}
+
+
+// 
+// Media query, in between 2 screen sizes
+// ----------------------------------------
+
+@mixin between( $size1: xs, $size2: lg, $breakpoints : var.$breakpoints-width ) { 
+	$value1 : get-media-query-value( $size1, $breakpoints );
+	$value2 : get-media-query-value( media-query-next( $size2, $breakpoints ), $breakpoints );
+
+	$lower : min( $value1, $value2 );
+	$upper : max( $value1, $value2 );
+
+	@if $lower != null and $upper != null { 
+		@include _breakpoint( $min-width: $lower, $max-width: $upper ) { 
+			@content;
+		}
+
+	} @else if $upper != null { 
+		@include down( $upper, $breakpoints ) { 
+			@content;
+		}
+
+	} @else if $lower != null { 
+		@include up( $lower, $breakpoints ) { 
+			@content;
+		}
+	}
+}
+
+
+// 
+// Media query, in between 2 screen sizes
+// ----------------------------------------
+
+@mixin only( $size1: xs, $breakpoints : var.$breakpoints-width ) { 
+	$size2 : media-query-next( $size1, $breakpoints );
+	$value1 : get-media-query-value( $size1, $breakpoints );
+	$value2 : get-media-query-value( $size2, $breakpoints );
+
+	$lower : ( $value1 );
+	$upper : if( null != $size2, ( $value2 - 1 ), null );
+
+	@if $lower != null and $upper != null { 
+		@include _breakpoint( $min-width: $lower, $max-width: $upper ) { 
+			@content;
+		}
+
+	} @else if $upper != null { 
+		@include down( $upper, $breakpoints ) { 
+			@content;
+		}
+
+	} @else if $lower != null { 
+		@include up( $lower, $breakpoints ) { 
+			@content;
+		}
+	}
+}
+
+
+// 
+// Media query, mobile
+// ----------------------------------------
+
+@mixin mobile( $breakpoints : var.$breakpoints-width ) { 
+	$value : get-media-query-value( md, $breakpoints );
+
+	@include down( md, $args ) { 
+		@content;
+	}
+}
+
+
+// 
+// Media query, desktop
+// ----------------------------------------
+
+@mixin desktop( $breakpoints : var.$breakpoints-width ) { 
+	$value : get-media-query-value( md, $breakpoints );
+
+	@include up( md, $args ) { 
+		@content;
+	}
+}
+
+
+// 
+// Media query, extra extra small
+// ----------------------------------------
+
+@mixin xxs( $breakpoints : var.$breakpoints-width ) { 
+	@include only( xxs, $breakpoints : var.$breakpoints-width ) { 
+		@content;
+	}
+}
+
+
+// 
+// Media query, extra small
+// ----------------------------------------
+
+@mixin xs( $breakpoints : var.$breakpoints-width ) { 
+	@include only( xs, $breakpoints : var.$breakpoints-width ) { 
+		@content;
+	}
+}
+
+
+// 
+// Media query, small
+// ----------------------------------------
+
+@mixin sm( $breakpoints : var.$breakpoints-width ) { 
+	@include only( sm, $breakpoints : var.$breakpoints-width ) { 
+		@content;
+	}
+}
+
+
+// 
+// Media query, medium
+// ----------------------------------------
+
+@mixin md( $breakpoints : var.$breakpoints-width ) { 
+	@include only( md, $breakpoints : var.$breakpoints-width ) { 
+		@content;
+	}
+}
+
+
+// 
+// Media query, large
+// ----------------------------------------
+
+@mixin lg( $breakpoints : var.$breakpoints-width ) { 
+	@include only( lg, $breakpoints : var.$breakpoints-width ) { 
+		@content;
+	}
+}
+
+
+// 
+// Media query, extra large
+// ----------------------------------------
+
+@mixin xl( $breakpoints : var.$breakpoints-width ) { 
+	@include only( xl, $breakpoints : var.$breakpoints-width ) { 
+		@content;
+	}
+}
+
+
+// 
+// Media query, extra extra large
+// ----------------------------------------
+
+@mixin xxl( $breakpoints : var.$breakpoints-width ) { 
+	@include only( xxl, $breakpoints : var.$breakpoints-width ) { 
+		@content;
+	}
+}
+
+
+// 
+// Media query, extra extra extra large
+// ----------------------------------------
+
+@mixin xxxl( $breakpoints : var.$breakpoints-width ) { 
+	@include only( xxxl, $breakpoints : var.$breakpoints-width ) { 
+		@content;
+	}
+}
+
+
+// 
+// Media Query, Landscape
+// ----------------------------------------
+
+@mixin landscape { 
+	@media only screen and ( orientation : landscape ) { 
+		@content;
+	}
+}
+
+
+// 
+// Media Query, Portrait
+// ----------------------------------------
+
+@mixin portrait { 
+	@media only screen and ( orientation : portrait ) { 
+		@content;
+	}
+}
+
+
+// 
+// Media Query, Portrait
+// ----------------------------------------
+
+@mixin print { 
+	@include _breakpoint( $media-type: 'print' ) { 
+		@content;
+	}
+}
+
+
+// 
+// Media Query, Retina display specific
+// ----------------------------------------
+
+@mixin retina { 
+	$pixel-ratio: 2;
+
+	@media only screen and ( -webkit-min-device-pixel-ratio: #{$pixel-ratio} ), 
+		only screen and ( min--moz-device-pixel-ratio: #{$pixel-ratio} ), 
+		only screen and ( min-device-pixel-ratio: #{$pixel-ratio} ) { 
+			@content;
+	}
+}
+
+
+// 
+// Media Query, IE11 specific
+// ----------------------------------------
+
+@mixin ie11 { 
+	@media only screen and ( -ms-high-contrast: none ), ( -ms-high-contrast: active ) { 
+		@content;
+	}
+}

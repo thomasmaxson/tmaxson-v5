@@ -1,0 +1,51 @@
+//
+// Mixins
+// --------------------------------------------------
+
+@use '../abstracts/settings' as setting;
+
+
+//
+// Darkmode
+// ----------------------------------------
+
+@mixin darkMode {
+	@if( setting.$darkMode ) {
+		@media( prefers-color-scheme: dark ) {
+			@content;
+		}
+	}
+}
+
+
+
+@mixin font-size( $sizeValue: $font-size-base ) { 
+	font-size: ( $sizeValue * 10 ) + px;
+	font-size: $sizeValue + rem;
+}
+
+
+
+
+
+@mixin clamp( $property, $min-size, $scaler, $max-size, $min-size-left: false, $scaler-left: false, $max-size-left: false ) { 
+	@if $min-size-left == false { 
+		// Set MAX values
+		#{$property}: $max-size;
+		#{$property}: #{“min(max(#{$min-size}, #{$scaler}), #{$max-size})”};
+		#{$property}: clamp(#{$min-size}, #{$scaler}, #{$max-size});
+
+	} @else if $min-size-left == 0 or $min-size-left == auto { 
+		// Set MAX values
+		#{$property}: $max-size $max-size-left;
+		#{$property}: #{“min(max(#{$min-size}, #{$scaler}), #{$max-size})”} $min-size-left;
+		#{$property}: clamp(#{$min-size}, #{$scaler}, #{$max-size}) $min-size-left;
+
+	} @else {
+		// Set MAX values
+		#{$property}:$max-size $max-size-left;
+		#{$property}:#{“min(max(#{$min-size}, #{$scaler}), #{$max-size})”} #{“min(max(#{$min-size-left}, #{$scaler-left}), #{$max-size-left})”};
+		// add second CLAMP and #{} to SASS variables
+		#{$property}: clamp(#{$min-size}, #{$scaler}, #{$max-size}) clamp(#{$min-size-left}, #{$scaler-left}, #{$max-size-left});
+	}
+}

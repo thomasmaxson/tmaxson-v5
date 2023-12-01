@@ -1,0 +1,40 @@
+//
+// Header
+// --------------------------------------------------
+
+@use '../abstracts/colors' as color;
+
+
+header { 
+	--color-gradient-start: #{color.$primary};
+	--color-gradient-end: #{color.$primary-dark};
+
+	display: grid;
+	padding-top: max( 5vh, 4rem );
+	padding-bottom: max( 5vh, 4rem );
+	color: var( --color-on-primary );
+	background-color: var( --color-primary );
+	background-image: linear-gradient( to bottom, var( --color-gradient-start ) 25%, var( --color-gradient-end ) 100% );
+	//background-image: url( '../assets/images/bg-terrain.png' );
+	place-content: center;
+
+	h1 {
+		color: inherit;
+		font-size: var( --font-size-h1 );
+		font-size: clamp( var( --font-size-h1 ) - 1.5rem, 1rem + 5vw, var( --font-size-h1 ) );
+		text-align: center;
+	}
+
+	header p { 
+		line-height: 1.3;
+		text-align: center;
+	}
+
+	& + :not(section) {
+		margin-top: max( 8vh, 4rem );
+	}
+
+	::selection {
+		background-color: var( --color-background );
+	}
+}

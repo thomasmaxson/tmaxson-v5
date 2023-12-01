@@ -1,0 +1,32 @@
+//
+// Component, Profile
+// --------------------------------------------------
+
+@use '../abstracts/spacing' as space;
+
+.profile { 
+	display: grid;
+	grid-gap: calc( var( --space-block ) * 2 );
+	align-items: center;
+	text-align: center;
+
+	@media ( min-width: 50rem ){ 
+		grid-template-columns: 1fr minmax( 50ch, 1fr );
+	}
+
+	img { 
+		place-self: center;
+		border-radius: 50%;
+		width: min( 80%, 30vw );
+	}
+
+	p { 
+		font-size: var( --font-size-400 );
+
+		small { 
+			display: block;
+			margin-top: 0.5em;
+			font-size: var( --font-size-300 );
+		}
+	}
+}

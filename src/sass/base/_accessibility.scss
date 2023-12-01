@@ -1,0 +1,73 @@
+//
+// Accessibility & User interaction
+// --------------------------------------------------
+//
+// Change the cursor on control elements in all browsers (opinionated)
+// ----------------------------------------
+
+[aria-controls] { cursor: pointer;}
+  
+// 
+// Change the cursor on disabled, not-editable, or otherwise inoperable elements in all browsers (opinionated)
+// ----------------------------------------
+
+[disabled], 
+[aria-disabled="true"] { cursor: not-allowed;}
+
+
+// 
+// Change the display on visually hidden accessible elements in all browsers (opinionated)
+// ----------------------------------------
+
+[aria-hidden="false"][hidden] { 
+	display: initial;
+
+	&:not(:focus) { 
+		clip: rect(0, 0, 0, 0);
+		position: absolute;
+	}
+}
+
+
+// 
+// Remove the tapping delay in IE 10
+// ----------------------------------------
+
+a, 
+area, 
+button, 
+input, 
+label, 
+select, 
+summary, 
+textarea, 
+[tabindex] { touch-action: manipulation;}
+
+
+// 
+// Switch right-to-left direction
+// ----------------------------------------
+
+[dir="rtl"] { direction: rtl;}
+
+
+// 
+// 1. Remove animations when motion is reduced (opinionated)
+// 2. Remove fixed background attachments when motion is reduced (opinionated)
+// 3. Remove timed scrolling behaviors when motion is reduced (opinionated)
+// 4. Remove transitions when motion is reduced (opinionated)
+// ----------------------------------------
+
+@media ( prefers-reduced-motion: reduce ) { 
+	*:not([aria-busy="true"]), 
+	:not([aria-busy="true"])::before, 
+	:not([aria-busy="true"])::after { 
+		background-attachment: initial !important; // 2
+		animation-duration: 1ms !important;        // 1
+		animation-delay: -1ms !important;          // 1
+		animation-iteration-count: 1 !important;   // 1
+		scroll-behavior: auto !important;          // 3
+		transition-delay: 0s !important;           // 4
+		transition-duration: 0s !important;        // 4
+	}
+}

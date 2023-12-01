@@ -1,0 +1,16 @@
+//
+// Spacing
+// --------------------------------------------------
+
+// Spacings
+$block         : 1rem;
+
+$block-half    : calc( $block * 0.5 );  // 0.5rem
+$block-quarter : calc( $block * 0.25 ); // 0.25rem
+
+
+// Spacings for typography elements
+$type         : 1.5rem;
+
+$type-half    : calc( type * 0.5 );  // 0.75rem
+$type-quarter : calc( type * 0.25 ); // 0.3125rem

@@ -1,0 +1,12 @@
+.vscode/
+
+.DS_Store
+.eslintrc.json
+.prettierignore
+.prettierrc
+.stylelintrc.json
+
+package-lock.json
+
+node_modules/
+public/

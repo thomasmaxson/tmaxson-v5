@@ -1,0 +1,26 @@
+//
+// Navigation
+// --------------------------------------------------
+
+nav {
+    background-color: var( --color-primary );
+    padding: var( --space-block-half ) var( --space-block );
+
+    ul { 
+        display: grid;
+        grid-gap: var( --space-block );
+        grid-auto-flow: column;
+        align-items: center;
+        justify-content: start;
+        margin: 0;
+    }
+
+    a { 
+        display: flex;
+        align-items: center;
+        line-height: 1;
+        color: var( --color-on-primary );
+        font-size: var( --font-size-base );
+        text-decoration: none;
+    }
+}

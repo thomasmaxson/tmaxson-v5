@@ -1,0 +1,177 @@
+//
+// Colors
+// --------------------------------------------------
+//
+// Generic Colors
+// ----------------------------------------
+//
+// Grayscale
+// ------------------------------
+
+$white:                                    #fff;
+
+$gray-100:                                 #f5f5f5;
+$grey-100:                                 $gray-100;
+
+$gray-200:                                 #eee;
+$grey-200:                                 $gray-200;
+
+$gray-300:                                 #e0e0e0;
+$grey-300:                                 $gray-300;
+
+$gray-400:                                 #bdbdbd;
+$grey-400:                                 $gray-400;
+
+$gray-500:                                 #9e9e9e;
+$grey-500:                                 $gray-500;
+
+$gray-600:                                 #757575;
+$grey-600:                                 $gray-600;
+
+$gray-700:                                 #616161;
+$grey-700:                                 $gray-700;
+
+$gray-800:                                 #424242;
+$grey-800:                                 $gray-800;
+
+$gray-900:                                 #212121;
+$grey-900:                                 $gray-900;
+
+$black:                                    #000;
+
+$grays : ( 
+	100 : $gray-100, 
+	200 : $gray-200, 
+	300 : $gray-300, 
+	400 : $gray-400, 
+	500 : $gray-500, 
+	600 : $gray-600, 
+	700 : $gray-700, 
+	800 : $gray-800, 
+	900 : $gray-900
+) !default;
+
+
+//
+// Standard
+// ------------------------------
+
+$pink:                                     #e91e63;
+$red:                                      #f44336;
+$deep-orange:                              #ff5722;
+$orange:                                   #fb8c00;
+$amber:                                    #ffc107;
+$yellow:	                               #fdd835;
+$light-green:                              #8bc34a;
+$green:                                    #4caf50;
+$teal:                                     #009688;
+$cyan:                                     #00bcd4;
+$light-blue:                               #03a9f4;
+$blue:                                     #039be5;
+$indigo:                                   #3f51b5;
+$purple:	                               #8e24aa;
+$violet:	                               $purple;
+$deep-violet:                              #673ab7;
+$deep-purple:                              $deep-violet;
+
+$colors : ( 
+	"pink"        : $pink, 
+	"red"         : $red, 
+	"deep-orange" : $deep-orange, 
+	"orange"      : $orange, 
+	"amber"       : $amber, 
+	"yellow"      : $yellow, 
+	"light-green" : $light-green, 
+	"green"       : $green, 
+	"teal"        : $teal, 
+	"cyan"        : $cyan, 
+	"light-blue"  : $light-blue, 
+	"blue"        : $blue, 
+	"indigo"      : $indigo, 
+	"purple"      : $purple, 
+	"violet"      : $violet, 
+	"deep-violet" : $deep-violet, 
+	"deep-purple" : $deep-purple
+) !default;
+
+
+//
+// Corporate Brand Colors
+// ----------------------------------------
+
+$brand-codepen:                            $black !default;
+$brand-discord:                            #5865f2 !default;
+$brand-dropbox:                            #1087dd !default;
+$brand-dribbble:                           #ea4c89 !default;
+$brand-facebook:                           #1877f2 !default;
+$brand-instagram:                          #c32aa3 !default;
+$brand-linkedin:                           #0a66c2 !default;
+$brand-mastodon:                           #6364ff !default;
+$brand-pinterest:                          #bd081c !default;
+$brand-reddit:                             #ff4500 !default;
+$brand-slack:                              #4a154b !default;
+$brand-snapchat:                           #fffc00 !default;
+$brand-spotify:                            #1ed760 !default;
+$brand-tiktok:                             #010101 !default;
+$brand-twitch:                             #9146ff !default;
+$brand-twitter:                            #1da1f2 !default;
+$brand-vimeo:                              #1ab7ea !default;
+$brand-whatsapp:                           #25d366 !default;
+$brand-x:                                  #000000 !default;
+$brand-youtube:                            #ff0000 !default;
+
+$brand-colors: ( 
+	"codepen"   : $brand-codepen, 
+	"discord"   : $brand-discord, 
+	"dropbox"   : $brand-dropbox, 
+	"dribbble"  : $brand-dribbble, 
+	"facebook"  : $brand-facebook, 
+	"instagram" : $brand-instagram, 
+	"linkedin"  : $brand-linkedin, 
+	"mastodon"  : $brand-mastodon, 
+	"pinterest" : $brand-pinterest, 
+	"reddit"    : $brand-reddit, 
+	"slack"     : $brand-slack, 
+	"snapchat"  : $brand-snapchat, 
+	"spotify"   : $brand-spotify, 
+	"tiktok"    : $brand-tiktok, 
+	"twitch"    : $brand-twitch, 
+	"twitter"   : $brand-twitter, 
+	"vimeo"     : $brand-vimeo, 
+	"whatsapp"  : $brand-whatsapp, 
+	"x"         : $brand-x, 
+	"youtube"   : $brand-youtube
+) !default;
+
+
+//
+// Other Colors
+// ----------------------------------------
+
+$background:                        $white;
+$background-darkmode:               $gray-900;
+
+$text:                             #111;
+$text-darkmode:                    #ccc;
+
+$link:                               $green;
+$link-hover:                         darken( $link, 10% );
+$link-focus:                         $link-hover;
+
+$primary:                            $green;
+$primary-dark:                       darken( $primary, 10% );
+$primary-hover:                      $primary-dark;
+$primary-focus:                      $primary-hover;
+$on-primary:                         $gray-100;
+
+$secondary:                        #af4cab;
+$secondary-dark:                     darken( $secondary, 10% );
+$secondary-hover:                    $secondary-dark;
+$secondary-focus:                    $secondary-hover;
+$on-secondary:                       $gray-100;
+
+$teritary:                         #d7a3d5;
+$teritary-dark:                      darken( $teritary, 10% );
+$teritary-hover:                     $teritary-dark;
+$teritary-focus:                     $teritary-hover;
+$on-teritary:                        $gray-800;

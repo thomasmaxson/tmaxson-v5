@@ -1,0 +1,67 @@
+//
+// Base
+// --------------------------------------------------
+
+@use '../abstracts/mixins' as mixin;
+@use '../abstracts/variables' as var;
+
+@use '../abstracts/media-queries' as mq;
+@use '../abstracts/scrollbar' as scrollbar;
+
+@use '../abstracts/colors' as color;
+@use '../abstracts/fonts' as font;
+
+html { 
+	color-scheme: light;
+	scroll-behavior: smooth;
+	-webkit-text-size-adjust: 100%;
+
+	@media ( prefers-reduced-motion : reduce ) { 
+		scroll-behavior: auto;
+
+		&:focus-within { scroll-behavior: auto;}
+	}
+}
+
+body { 
+	--color-text: var( --color-text, #{color.$text} );
+	--color-background: var( --color-background, #{color.$background} );
+
+	margin: 0;
+	min-height: 100vh;
+	line-height: font.$line-height;
+	color: var( --color-text );
+	font-family: var( --font-family );
+	font-size: clamp( var( --font-size-300 ), 1.25vw, var( --font-size-400 ) );
+	font-style: normal;
+	font-weight: var( --font-weight-base );
+	text-rendering: optimizeSpeed;
+	background-color: var( --color-background );
+	//@include scrollbar.init( red, transparent );
+
+	@include mixin.darkMode { 
+		--color-background: var( --color-background-darkmode, #{color.$background-darkmode} );
+		--color-text: var( --color-text-darkmode, #{color.$text-darkmode} );
+
+	}
+}
+
+img { 
+	font-style: italic;
+	background-repeat: none;
+	background-size: cover;
+	max-width: 100%;
+	height: auto;
+	vertical-align: middle;
+	shape-margin: var( --space-block );
+}
+
+.visually-hidden { 
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	white-space: nowrap;
+	clip: rect( 0 0 0 0 );
+	clip-path: inset( 50% );
+}

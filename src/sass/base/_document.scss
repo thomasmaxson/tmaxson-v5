@@ -1,0 +1,118 @@
+//
+// Document, Root
+// --------------------------------------------------
+
+@use '../abstracts/colors' as color;
+@use '../abstracts/fonts' as font;
+@use '../abstracts/spacing' as space;
+
+
+// 
+// 1. Add border box sizing in all browsers (opinionated)
+// 2. Backgrounds do not repeat by default (opinionated)
+// ----------------------------------------
+
+*, 
+*::before, 
+*::after { 
+	box-sizing: border-box;       // 1
+	background-repeat: no-repeat; // 2
+
+	@media ( prefers-reduced-motion : reduce ) { 
+		scroll-behavior: auto !important;
+		animation-duration: .01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: .01ms !important;
+	}
+}
+
+
+// 
+// 1. Add text decoration inheritance in all browsers (opinionated)
+// 2. Add vertical alignment inheritance in all browsers (opinionated)
+// ----------------------------------------
+
+::before, 
+::after { 
+	text-decoration: inherit; // 1
+	vertical-align: inherit;  // 2
+}
+
+
+// 
+// 
+// ----------------------------------------
+
+:where( :root ) { 
+	@each $name, $value in color.$colors { 
+		--color-#{$name}: #{$value};
+	}
+
+	@each $name, $value in color.$grays { 
+		--color-gray-#{$name}: #{$value};
+	}
+
+	--color-text: #{color.$text};
+	--color-background: #{color.$background};
+
+	--color-text-darkmode: #{color.$text-darkmode};
+	--color-background-darkmode: #{color.$background-darkmode};
+
+	--color-link: #{color.$link};
+
+	--color-primary: #{color.$primary};
+	--color-on-primary: #{color.$white};
+	--color-secondary: #{color.$secondary};
+	--color-on-secondary: #{color.$white};
+	--color-teritary: #{color.$teritary};
+	--color-on-teritary: #{color.$gray-800};
+
+	--font-family: #{font.$sans-serif};
+
+	--font-size-200: #{font.$size-200};
+	--font-size-300: #{font.$size-300};
+	--font-size-400: #{font.$size-400};
+	--font-size-500: #{font.$size-500};
+	--font-size-600: #{font.$size-600};
+	--font-size-700: #{font.$size-700};
+
+	--font-size-h1: #{font.$size-h1};
+	--font-size-h2: #{font.$size-h2};
+	--font-size-h3: #{font.$size-h3};
+	--font-size-h4: #{font.$size-h4};
+	--font-size-h5: #{font.$size-h5};
+	--font-size-h6: #{font.$size-h6};
+
+	--font-weight-base: #{font.$weight-base};
+	--font-weight-semibold: #{font.$weight-semibold};
+	--font-weight-bold: #{font.$weight-bold};
+
+	--space-block: #{space.$block};
+	--space-block-half: #{space.$block};
+	--space-block-quarter: #{space.$block};
+
+	--space-type: #{space.$type};
+	--space-type-half: #{space.$type};
+	--space-type-quarter: #{space.$type};
+
+
+	--ins-color: #000000;
+	--del-color: #000000;
+
+	
+	// 1. Use the default cursor in all browsers (opinionated)
+	// 2. Change the line height in all browsers (opinionated)
+	// 3. Breaks words to prevent overflow in all browsers (opinionated)
+	// 4. Use a 4-space tab width in all browsers (opinionated)
+	// 5. Remove the grey highlight on links in iOS (opinionated)
+	// 6. Prevent adjustments of font size after orientation changes in iOS
+	-webkit-tap-highlight-color: transparent; // 5
+	-webkit-text-size-adjust: 100%; // 6
+	text-size-adjust: 100%; // 6
+	background-color: var( --color-background );
+	color: var( --color-text );
+	text-rendering: optimizeLegibility;
+	overflow-wrap: break-word; // 3
+	cursor: default; // 1
+	tab-size: 4; // 4
+}

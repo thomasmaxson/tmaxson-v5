@@ -1,0 +1,109 @@
+//
+// Functions
+// --------------------------------------------------
+
+@use 'sass:math';
+
+
+// 
+// 
+// ----------------------------------------
+
+@function _hex-to-rgb( $color )
+{ 
+	@return unquote( 'rgb( #{red( $color )}, #{green( $color )}, #{blue( $color )} )' );
+}
+
+
+// 
+// 
+// ----------------------------------------
+
+@function _to-rems( $pixels )
+{ 
+	@if ( not math.is-unitless( $pixels ) )
+	{ 
+		@error '#{$pixels} is not a unitless value';
+
+	} @else
+	{ 
+		@return math.div( $pixels, 16 ) + rem;
+
+	}
+}
+
+
+// 
+// 
+// ----------------------------------------
+
+@function _to-ems( $pixels )
+{ 
+	@if ( not math.is-unitless( $pixels ) )
+	{ 
+		@error '#{$pixels} is not a unitless value';
+
+	} @else
+	{ 
+		@return math.div( $pixels, 16 ) + rem;
+
+	}
+}
+
+
+// 
+// 
+// ----------------------------------------
+
+@function _add-em( $number, $type: 'em' ) { 
+	@if type_of( $number ) == 'number' { 
+		$unit: 1em;
+
+		@if $type == 'rem' { 
+			$unit: 1rem;
+		}
+
+		@return math.div( $number, $number * 0 + 1 ) * $unit;
+
+	} @else {
+		@error "Expected number but was passed #{type_of($number)}: #{$number}";
+
+	}
+}
+
+
+// 
+// Converts px to ems using the $base-font-size global variable
+// ----------------------------------------
+
+@function _px-to-ems( $px ) { 
+	@return math.div( $px, $font-size-base );
+}
+
+
+// 
+// 
+// ----------------------------------------
+
+@function _px-to-rem( $px ) { 
+	@return math.div( $px, $font-size-base )rem;
+}
+
+
+// 
+// Encodes a SVG data URL so IE doesn't choke
+// ----------------------------------------
+
+@function svg-url( $svg ) { 
+	$svg: str-replace( $svg, '"', '\'' );
+	$svg: str-replace( $svg, '%', '%25' );
+	$svg: str-replace( $svg, '<', '%3C' );
+	$svg: str-replace( $svg, '>', '%3E' );
+	$svg: str-replace( $svg, '&', '%26' );
+	$svg: str-replace( $svg, '#', '%23' );
+	$svg: str-replace( $svg, '{', '%7B' );
+	$svg: str-replace( $svg, '}', '%7D' );
+	$svg: str-replace( $svg, ';', '%3B' );
+
+	@return url( "data:image/svg+xml;charset=utf8,#{$svg}" );
+}

@@ -1,0 +1,40 @@
+//
+// Variables
+// --------------------------------------------------
+
+// 
+// Map of width based breakpoints names and values in pixels
+// ----------------------------------------
+
+$breakpoints-width: ( 
+	xxs  : 359px, 
+	xs   : 480px,  // Extra small devices | Portrait phones
+	sm   : 640px,  // Small devices | Landscape phones
+	md   : 768px,  // Medium devices | Tablets
+	lg   : 1024px, // Large devices | Desktops
+	xl   : 1244px, // Extra large devices | Desktops
+	xxl  : 1410px, // Mega large Desktops | Desktops
+	xxxl : 1570px
+) !default;
+  
+
+// 
+// Map of height based breakpoints names and values in pixels
+// ----------------------------------------
+
+$breakpoints-height: ( 
+	xxs : 0px, 
+	xs  : 360px, 
+	sm  : 576px, 
+	md  : 1768px, 
+	lg  : 960px, 
+	xl  : 1080px, 
+	xxl : 1440px
+) !default;
+
+
+
+$duration:                      0.15s !default;
+$timing-function:               ease-in-out !default;
+
+$transition: $duration $timing-function;
